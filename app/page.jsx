@@ -859,7 +859,7 @@ function Navbar({ progress }) {
   const linkOpacity = Math.max(0, 1 - progress * 8)
   return (
     <nav style={{ position:'fixed', top:0, left:0, right:0, zIndex:100, padding:'0 32px', height:'60px', display:'flex', alignItems:'center', justifyContent:'space-between', background:'transparent' }}>
-      <span style={{ fontFamily:'var(--font-mono)', fontSize:'14px', color:'#67e8f9', letterSpacing:'0.05em' }}>carter.dev</span>
+      <span style={{ fontFamily:'var(--font-mono)', fontSize:'14px', color:'#67e8f9', letterSpacing:'0.05em' }}>CarterY.dev</span>
       <div style={{ display:'flex', gap:'28px', opacity: linkOpacity, pointerEvents: linkOpacity < 0.1 ? 'none' : 'auto', transition:'opacity 0.1s' }}>
         {[['#work','Work'],['#about','About'],['#contact','Contact']].map(([h,label])=>(
           <a key={h} href={h} style={{ fontSize:'13px', color:'rgba(255,255,255,0.75)', textDecoration:'none', transition:'color 0.2s' }}
