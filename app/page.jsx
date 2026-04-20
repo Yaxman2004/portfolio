@@ -903,7 +903,7 @@ export default function OceanPortfolio() {
   const handleSubmit = async (e) => {
     e.preventDefault(); setFormStatus('sending')
     try {
-      const res = await fetch('https://formspree.io/f/YOUR_FORM_ID', { method:'POST', headers:{ 'Content-Type':'application/json', Accept:'application/json' }, body:JSON.stringify(formData) })
+      const res = await fetch('https://formspree.io/f/mbdqkyqy', { method:'POST', headers:{ 'Content-Type':'application/json', Accept:'application/json' }, body:JSON.stringify(formData) })
       setFormStatus(res.ok?'success':'error')
       if (res.ok) setFormData({ name:'', email:'', message:'' })
     } catch { setFormStatus('error') }
