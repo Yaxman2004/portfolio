@@ -995,7 +995,7 @@ export default function OceanPortfolio() {
                   <button key={btn.dir}
                     onClick={()=>setCarouselIdx(i=>{
                       if(btn.dir==='prev') return Math.max(0, i-1)
-                      return Math.min(projects.length-1, i+1)
+                      return Math.min(projects.length-3, i+1)
                     })}
                     style={{
                       width:'44px', height:'44px',
@@ -1006,7 +1006,7 @@ export default function OceanPortfolio() {
                       cursor:'pointer',
                       display:'flex', alignItems:'center', justifyContent:'center',
                       transition:'background 0.2s, border-color 0.2s',
-                      opacity: btn.dir==='prev' ? (carouselIdx===0?0.25:1) : (carouselIdx===projects.length-1?0.25:1),
+                      opacity: btn.dir==='prev' ? (carouselIdx===0?0.25:1) : (carouselIdx>=projects.length-3?0.25:1),
                     }}
                     onMouseEnter={e=>{ e.currentTarget.style.background='rgba(103,232,249,0.12)'; e.currentTarget.style.borderColor='rgba(103,232,249,0.4)' }}
                     onMouseLeave={e=>{ e.currentTarget.style.background='rgba(255,255,255,0.05)'; e.currentTarget.style.borderColor='rgba(255,255,255,0.1)' }}
@@ -1020,12 +1020,13 @@ export default function OceanPortfolio() {
               <div style={{
                 display:'flex',
                 gap:'20px',
-                transform:`translateX(calc(${carouselIdx} * -360px))`,
+                transform:`translateX(calc(${carouselIdx} * (100% / 3 + 20px / 3 * -1) * -1))`,
                 transition:'transform 0.45s cubic-bezier(0.4,0,0.2,1)',
               }}>
                 {projects.map((p2,i)=>(
                   <div key={p2.title} style={{
-                    width:'340px', flexShrink:0,
+                    width:'calc((100% - 40px) / 3)',
+                    flexShrink:0,
                     background:'rgba(255,255,255,0.04)',
                     border:'1px solid rgba(255,255,255,0.07)',
                     borderTop:`3px solid ${p2.color}`,
@@ -1033,7 +1034,7 @@ export default function OceanPortfolio() {
                     padding:'28px 28px 24px',
                     display:'flex', flexDirection:'column',
                     transition:'transform 0.25s, box-shadow 0.25s, opacity 0.45s',
-                    opacity: Math.abs(i - carouselIdx) > 2 ? 0 : 1 - Math.abs(i - carouselIdx) * 0.15,
+                    opacity: Math.abs(i - carouselIdx) > 2 ? 0.3 : 1 - Math.abs(i - carouselIdx) * 0.15,
                   }}
                     onMouseEnter={e=>{ e.currentTarget.style.transform='translateY(-6px)'; e.currentTarget.style.boxShadow=`0 20px 60px ${p2.color}22` }}
                     onMouseLeave={e=>{ e.currentTarget.style.transform='translateY(0)'; e.currentTarget.style.boxShadow='none' }}>
