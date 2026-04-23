@@ -7,11 +7,27 @@ import { useEffect, useRef, useState } from 'react'
 const projects = [
   {
     title: "Schuberg's Bar & Grill",
-    type: 'Client Redesign',
-    description: 'Full redesign of a 90-year-old institution. Custom 5-page Next.js site with interactive menu, history timeline, and photo gallery — replacing a dated Wix site.',
+    type: 'Client Concept',
+    description: 'Full redesign of a 90-year-old Big Rapids institution. Custom 5-page site with interactive menu, history timeline, and photo gallery — replacing a dated Wix site.',
     tags: ['Next.js', 'Tailwind CSS', 'Vercel'],
     live: 'https://schubergsbar-site.vercel.app',
     color: '#f59e0b',
+  },
+  {
+    title: "Belle's Coffeehouse",
+    type: 'Client Concept',
+    description: 'Modern rustic site for a downtown Big Rapids coffee shop. Full menu, hours, about section, and contact — built to replace a Facebook-only presence.',
+    tags: ['HTML', 'CSS', 'JavaScript'],
+    live: 'https://belles-mockup.vercel.app',
+    color: '#d97706',
+  },
+  {
+    title: 'Apex Excavating & Underground',
+    type: 'Client Concept',
+    description: 'Bold industrial site for a Northern Michigan excavating contractor. Services, project types, contact form, and quote request — built to get them their first web leads.',
+    tags: ['HTML', 'CSS', 'JavaScript'],
+    live: 'https://apex-mockup.vercel.app',
+    color: '#d4621a',
   },
   {
     title: 'Metrik',
@@ -859,7 +875,7 @@ function Navbar({ progress }) {
   const linkOpacity = Math.max(0, 1 - progress * 8)
   return (
     <nav style={{ position:'fixed', top:0, left:0, right:0, zIndex:100, padding:'0 32px', height:'60px', display:'flex', alignItems:'center', justifyContent:'space-between', background:'transparent' }}>
-      <span style={{ fontFamily:'var(--font-mono)', fontSize:'14px', color:'#67e8f9', letterSpacing:'0.05em' }}>CarterY.dev</span>
+      <span style={{ fontFamily:'var(--font-mono)', fontSize:'14px', color:'#67e8f9', letterSpacing:'0.05em' }}>carter.dev</span>
       <div style={{ display:'flex', gap:'28px', opacity: linkOpacity, pointerEvents: linkOpacity < 0.1 ? 'none' : 'auto', transition:'opacity 0.1s' }}>
         {[['#work','Work'],['#about','About'],['#contact','Contact']].map(([h,label])=>(
           <a key={h} href={h} style={{ fontSize:'13px', color:'rgba(255,255,255,0.75)', textDecoration:'none', transition:'color 0.2s' }}
@@ -881,8 +897,9 @@ function Navbar({ progress }) {
 export default function OceanPortfolio() {
   const [scrollY,    setScrollY]    = useState(0)
   const [maxScroll,  setMaxScroll]  = useState(1)
-  const [formData,   setFormData]   = useState({ name:'', email:'', message:'' })
-  const [formStatus, setFormStatus] = useState('idle')
+  const [formData,    setFormData]    = useState({ name:'', email:'', message:'' })
+  const [formStatus,  setFormStatus]  = useState('idle')
+  const [carouselIdx, setCarouselIdx] = useState(0)
   const progressRef = useRef(0)
 
   useEffect(() => {
@@ -903,7 +920,7 @@ export default function OceanPortfolio() {
   const handleSubmit = async (e) => {
     e.preventDefault(); setFormStatus('sending')
     try {
-      const res = await fetch('https://formspree.io/f/mbdqkyqy', { method:'POST', headers:{ 'Content-Type':'application/json', Accept:'application/json' }, body:JSON.stringify(formData) })
+      const res = await fetch('https://formspree.io/f/YOUR_FORM_ID', { method:'POST', headers:{ 'Content-Type':'application/json', Accept:'application/json' }, body:JSON.stringify(formData) })
       setFormStatus(res.ok?'success':'error')
       if (res.ok) setFormData({ name:'', email:'', message:'' })
     } catch { setFormStatus('error') }
@@ -940,7 +957,7 @@ export default function OceanPortfolio() {
               I build websites & web apps{' '}<span style={{ color:'#fcd34d' }}>for businesses.</span>
             </h2>
             <p style={{ fontSize:'16px', color:'rgba(255,255,255,0.82)', maxWidth:'480px', margin:'0 auto 40px', lineHeight:1.75, textShadow:'0 1px 8px rgba(0,0,0,0.4)' }}>
-              Frontend developer based in Michigan. React, Next.js, and a passion for building things that actually work.
+              Frontend developer based in Big Rapids, MI. React, Next.js, and a passion for building things that actually work.
             </p>
             <div style={{ display:'flex', gap:'16px', justifyContent:'center', flexWrap:'wrap', marginBottom:'48px' }}>
               <a href="#work" style={{ padding:'14px 32px', background:'#f59e0b', color:'#0f0a00', fontWeight:700, borderRadius:'12px', textDecoration:'none', fontSize:'14px', boxShadow:'0 0 32px rgba(245,158,11,0.35)' }}>See my work</a>
@@ -964,27 +981,94 @@ export default function OceanPortfolio() {
         {/* WORK */}
         <section id="work" style={sec()}>
           <div style={cont}>
-            <div style={{ marginBottom:'44px' }}>
-              <p style={{ fontFamily:'var(--font-mono)', color:'#67e8f9', fontSize:'10px', letterSpacing:'0.22em', marginBottom:'8px' }}>02. WORK</p>
-              <h2 style={{ fontSize:'clamp(26px,5vw,42px)', fontWeight:800, color:'white', letterSpacing:'-0.02em' }}>Selected projects</h2>
+            <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-end', marginBottom:'44px', flexWrap:'wrap', gap:'16px' }}>
+              <div>
+                <p style={{ fontFamily:'var(--font-mono)', color:'#67e8f9', fontSize:'10px', letterSpacing:'0.22em', marginBottom:'8px' }}>02. WORK</p>
+                <h2 style={{ fontSize:'clamp(26px,5vw,42px)', fontWeight:800, color:'white', letterSpacing:'-0.02em' }}>Selected projects</h2>
+              </div>
+              {/* Arrow buttons */}
+              <div style={{ display:'flex', gap:'10px' }}>
+                {[
+                  { dir:'prev', icon:'←' },
+                  { dir:'next', icon:'→' },
+                ].map(btn=>(
+                  <button key={btn.dir}
+                    onClick={()=>setCarouselIdx(i=>{
+                      if(btn.dir==='prev') return Math.max(0, i-1)
+                      return Math.min(projects.length-1, i+1)
+                    })}
+                    style={{
+                      width:'44px', height:'44px',
+                      borderRadius:'50%',
+                      background:'rgba(255,255,255,0.05)',
+                      border:'1px solid rgba(255,255,255,0.1)',
+                      color:'white', fontSize:'18px',
+                      cursor:'pointer',
+                      display:'flex', alignItems:'center', justifyContent:'center',
+                      transition:'background 0.2s, border-color 0.2s',
+                      opacity: btn.dir==='prev' ? (carouselIdx===0?0.25:1) : (carouselIdx===projects.length-1?0.25:1),
+                    }}
+                    onMouseEnter={e=>{ e.currentTarget.style.background='rgba(103,232,249,0.12)'; e.currentTarget.style.borderColor='rgba(103,232,249,0.4)' }}
+                    onMouseLeave={e=>{ e.currentTarget.style.background='rgba(255,255,255,0.05)'; e.currentTarget.style.borderColor='rgba(255,255,255,0.1)' }}
+                  >{btn.icon}</button>
+                ))}
+              </div>
             </div>
-            <div style={{ display:'flex', flexDirection:'column', gap:'18px' }}>
-              {projects.map(p2=>(
-                <div key={p2.title} style={{ ...glass, borderLeft:`3px solid ${p2.color}`, transition:'transform 0.2s' }}
-                  onMouseEnter={e=>e.currentTarget.style.transform='translateX(6px)'}
-                  onMouseLeave={e=>e.currentTarget.style.transform='translateX(0)'}>
-                  <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', flexWrap:'wrap', gap:'12px', marginBottom:'12px' }}>
-                    <div>
-                      <span style={{ fontSize:'10px', fontFamily:'var(--font-mono)', color:p2.color, letterSpacing:'0.1em' }}>{p2.type}</span>
-                      <h3 style={{ fontSize:'21px', fontWeight:700, color:'white', marginTop:'4px' }}>{p2.title}</h3>
+
+            {/* Cards */}
+            <div style={{ position:'relative', overflow:'hidden' }}>
+              <div style={{
+                display:'flex',
+                gap:'20px',
+                transform:`translateX(calc(${carouselIdx} * -360px))`,
+                transition:'transform 0.45s cubic-bezier(0.4,0,0.2,1)',
+              }}>
+                {projects.map((p2,i)=>(
+                  <div key={p2.title} style={{
+                    width:'340px', flexShrink:0,
+                    background:'rgba(255,255,255,0.04)',
+                    border:'1px solid rgba(255,255,255,0.07)',
+                    borderTop:`3px solid ${p2.color}`,
+                    borderRadius:'16px',
+                    padding:'28px 28px 24px',
+                    display:'flex', flexDirection:'column',
+                    transition:'transform 0.25s, box-shadow 0.25s, opacity 0.45s',
+                    opacity: Math.abs(i - carouselIdx) > 2 ? 0 : 1 - Math.abs(i - carouselIdx) * 0.15,
+                  }}
+                    onMouseEnter={e=>{ e.currentTarget.style.transform='translateY(-6px)'; e.currentTarget.style.boxShadow=`0 20px 60px ${p2.color}22` }}
+                    onMouseLeave={e=>{ e.currentTarget.style.transform='translateY(0)'; e.currentTarget.style.boxShadow='none' }}>
+                    <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'20px' }}>
+                      <span style={{ fontFamily:'var(--font-mono)', fontSize:'10px', color:p2.color, letterSpacing:'0.12em' }}>{p2.type}</span>
+                      <span style={{ fontFamily:'var(--font-mono)', fontSize:'11px', color:'rgba(255,255,255,0.15)' }}>0{i+1}</span>
                     </div>
-                    {p2.live&&<a href={p2.live} target="_blank" rel="noopener noreferrer" style={{ fontSize:'12px', fontWeight:600, color:'#020e1a', background:p2.color, padding:'7px 16px', borderRadius:'8px', textDecoration:'none', flexShrink:0 }}>Live site ↗</a>}
+                    <h3 style={{ fontSize:'20px', fontWeight:700, color:'white', marginBottom:'14px', lineHeight:1.25 }}>{p2.title}</h3>
+                    <p style={{ fontSize:'13px', color:'rgba(255,255,255,0.48)', lineHeight:1.75, marginBottom:'20px', flex:1 }}>{p2.description}</p>
+                    <div style={{ display:'flex', gap:'6px', flexWrap:'wrap', marginBottom:'22px' }}>
+                      {p2.tags.map(tag=><span key={tag} style={{ fontSize:'9px', fontFamily:'var(--font-mono)', color:'rgba(255,255,255,0.35)', background:'rgba(255,255,255,0.05)', border:'1px solid rgba(255,255,255,0.07)', padding:'3px 9px', borderRadius:'999px' }}>{tag}</span>)}
+                    </div>
+                    {p2.live&&<a href={p2.live} target="_blank" rel="noopener noreferrer"
+                      style={{ display:'block', textAlign:'center', fontSize:'12px', fontWeight:600, color:'#020e1a', background:p2.color, padding:'10px 0', borderRadius:'8px', textDecoration:'none', transition:'opacity 0.2s' }}
+                      onMouseEnter={e=>e.currentTarget.style.opacity='0.85'}
+                      onMouseLeave={e=>e.currentTarget.style.opacity='1'}>
+                      View Live Site ↗
+                    </a>}
                   </div>
-                  <p style={{ fontSize:'14px', color:'rgba(255,255,255,0.52)', lineHeight:1.75, marginBottom:'16px' }}>{p2.description}</p>
-                  <div style={{ display:'flex', gap:'7px', flexWrap:'wrap' }}>
-                    {p2.tags.map(tag=><span key={tag} style={{ fontSize:'10px', fontFamily:'var(--font-mono)', color:'rgba(255,255,255,0.4)', background:'rgba(255,255,255,0.05)', border:'1px solid rgba(255,255,255,0.07)', padding:'3px 10px', borderRadius:'999px' }}>{tag}</span>)}
-                  </div>
-                </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Dot indicators */}
+            <div style={{ display:'flex', gap:'8px', justifyContent:'center', marginTop:'32px' }}>
+              {projects.map((_,i)=>(
+                <button key={i} onClick={()=>setCarouselIdx(i)} style={{
+                  width: i===carouselIdx ? '24px' : '8px',
+                  height:'8px',
+                  borderRadius:'999px',
+                  background: i===carouselIdx ? '#67e8f9' : 'rgba(255,255,255,0.2)',
+                  border:'none', cursor:'pointer',
+                  transition:'all 0.3s',
+                  padding:0,
+                }}/>
               ))}
             </div>
           </div>
@@ -1000,8 +1084,8 @@ export default function OceanPortfolio() {
             <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))', gap:'28px' }}>
               <div style={glass}>
                 <div style={{ display:'flex', flexDirection:'column', gap:'14px', fontSize:'15px', color:'rgba(255,255,255,0.6)', lineHeight:1.8 }}>
-                  <p>I'm Carter — a solo frontend developer based in Michigan. I build fast, polished websites and web apps that help businesses look professional and work reliably.</p>
-                  <p>I started building on the web because I wanted to create real things that real people use. Whether it's a local restaurant needing a better site or a startup needing an MVP.</p>
+                  <p>I'm Carter — a self-taught frontend developer based in Big Rapids, Michigan. I build fast, polished websites and web apps that help businesses look professional and work reliably.</p>
+                  <p>I started building on the web because I wanted to create real things that real people use. Whether it's a local restaurant needing a better site or a startup needing an MVP — I care about the craft and the end result.</p>
                   <p>Currently open to freelance projects and looking to take on new clients.</p>
                 </div>
                 <a href="mailto:carteryax@gmail.com" style={{ display:'inline-block', marginTop:'22px', fontSize:'14px', color:'#67e8f9', textDecoration:'none', fontWeight:500 }}>carteryax@gmail.com →</a>
@@ -1026,7 +1110,7 @@ export default function OceanPortfolio() {
             </div>
             <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(260px,1fr))', gap:'28px' }}>
               <div style={{ display:'flex', flexDirection:'column', gap:'22px' }}>
-                {[{label:'EMAIL',value:'carteryax@gmail.com',href:'mailto:carteryax@gmail.com'},{label:'BASED IN',value:'Michigan',href:null}].map(item=>(
+                {[{label:'EMAIL',value:'carteryax@gmail.com',href:'mailto:carteryax@gmail.com'},{label:'BASED IN',value:'Big Rapids, Michigan',href:null}].map(item=>(
                   <div key={item.label}>
                     <p style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(255,255,255,0.28)', letterSpacing:'0.22em', marginBottom:'6px' }}>{item.label}</p>
                     {item.href?<a href={item.href} style={{ color:'white', textDecoration:'none', fontSize:'15px' }} onMouseEnter={e=>e.target.style.color='#67e8f9'} onMouseLeave={e=>e.target.style.color='white'}>{item.value}</a>:<p style={{ color:'white', fontSize:'15px' }}>{item.value}</p>}
