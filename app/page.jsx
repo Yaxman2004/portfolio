@@ -899,7 +899,6 @@ export default function OceanPortfolio() {
   const [maxScroll,  setMaxScroll]  = useState(1)
   const [formData,    setFormData]    = useState({ name:'', email:'', message:'' })
   const [formStatus,  setFormStatus]  = useState('idle')
-  const [carouselIdx, setCarouselIdx] = useState(0)
   const progressRef = useRef(0)
 
   useEffect(() => {
@@ -979,99 +978,111 @@ export default function OceanPortfolio() {
         </section>
 
         {/* WORK */}
-        <section id="work" style={sec()}>
+        <section id="work" style={{...sec(), padding:0, paddingTop:'80px', paddingBottom:'80px'}}>
           <div style={cont}>
             <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-end', marginBottom:'44px', flexWrap:'wrap', gap:'16px' }}>
               <div>
                 <p style={{ fontFamily:'var(--font-mono)', color:'#67e8f9', fontSize:'10px', letterSpacing:'0.22em', marginBottom:'8px' }}>02. WORK</p>
                 <h2 style={{ fontSize:'clamp(26px,5vw,42px)', fontWeight:800, color:'white', letterSpacing:'-0.02em' }}>Selected projects</h2>
               </div>
-              {/* Arrow buttons */}
-              <div style={{ display:'flex', gap:'10px' }}>
-                {[
-                  { dir:'prev', icon:'←' },
-                  { dir:'next', icon:'→' },
-                ].map(btn=>(
-                  <button key={btn.dir}
-                    onClick={()=>setCarouselIdx(i=>{
-                      if(btn.dir==='prev') return Math.max(0, i-1)
-                      return Math.min(projects.length-3, i+1)
-                    })}
-                    style={{
-                      width:'44px', height:'44px',
-                      borderRadius:'50%',
-                      background:'rgba(255,255,255,0.05)',
-                      border:'1px solid rgba(255,255,255,0.1)',
-                      color:'white', fontSize:'18px',
-                      cursor:'pointer',
-                      display:'flex', alignItems:'center', justifyContent:'center',
-                      transition:'background 0.2s, border-color 0.2s',
-                      opacity: btn.dir==='prev' ? (carouselIdx===0?0.25:1) : (carouselIdx>=projects.length-3?0.25:1),
-                    }}
-                    onMouseEnter={e=>{ e.currentTarget.style.background='rgba(103,232,249,0.12)'; e.currentTarget.style.borderColor='rgba(103,232,249,0.4)' }}
-                    onMouseLeave={e=>{ e.currentTarget.style.background='rgba(255,255,255,0.05)'; e.currentTarget.style.borderColor='rgba(255,255,255,0.1)' }}
-                  >{btn.icon}</button>
-                ))}
-              </div>
+              <p style={{ fontFamily:'var(--font-mono)', fontSize:'10px', color:'rgba(255,255,255,0.25)', letterSpacing:'0.12em' }}>HOVER EDGES TO BROWSE</p>
             </div>
+          </div>
 
-            {/* Cards */}
-            <div style={{ position:'relative', overflow:'hidden' }}>
-              <div style={{
-                display:'flex',
-                gap:'20px',
-                transform:`translateX(calc(${carouselIdx} * (100% / 3 + 20px / 3 * -1) * -1))`,
-                transition:'transform 0.45s cubic-bezier(0.4,0,0.2,1)',
-              }}>
-                {projects.map((p2,i)=>(
-                  <div key={p2.title} style={{
-                    width:'calc((100% - 40px) / 3)',
-                    flexShrink:0,
-                    background:'rgba(255,255,255,0.04)',
-                    border:'1px solid rgba(255,255,255,0.07)',
-                    borderTop:`3px solid ${p2.color}`,
-                    borderRadius:'16px',
-                    padding:'28px 28px 24px',
-                    display:'flex', flexDirection:'column',
-                    transition:'transform 0.25s, box-shadow 0.25s, opacity 0.45s',
-                    opacity: Math.abs(i - carouselIdx) > 2 ? 0.3 : 1 - Math.abs(i - carouselIdx) * 0.15,
-                  }}
-                    onMouseEnter={e=>{ e.currentTarget.style.transform='translateY(-6px)'; e.currentTarget.style.boxShadow=`0 20px 60px ${p2.color}22` }}
-                    onMouseLeave={e=>{ e.currentTarget.style.transform='translateY(0)'; e.currentTarget.style.boxShadow='none' }}>
-                    <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'20px' }}>
-                      <span style={{ fontFamily:'var(--font-mono)', fontSize:'10px', color:p2.color, letterSpacing:'0.12em' }}>{p2.type}</span>
-                      <span style={{ fontFamily:'var(--font-mono)', fontSize:'11px', color:'rgba(255,255,255,0.15)' }}>0{i+1}</span>
-                    </div>
-                    <h3 style={{ fontSize:'20px', fontWeight:700, color:'white', marginBottom:'14px', lineHeight:1.25 }}>{p2.title}</h3>
-                    <p style={{ fontSize:'13px', color:'rgba(255,255,255,0.48)', lineHeight:1.75, marginBottom:'20px', flex:1 }}>{p2.description}</p>
-                    <div style={{ display:'flex', gap:'6px', flexWrap:'wrap', marginBottom:'22px' }}>
-                      {p2.tags.map(tag=><span key={tag} style={{ fontSize:'9px', fontFamily:'var(--font-mono)', color:'rgba(255,255,255,0.35)', background:'rgba(255,255,255,0.05)', border:'1px solid rgba(255,255,255,0.07)', padding:'3px 9px', borderRadius:'999px' }}>{tag}</span>)}
-                    </div>
-                    {p2.live&&<a href={p2.live} target="_blank" rel="noopener noreferrer"
-                      style={{ display:'block', textAlign:'center', fontSize:'12px', fontWeight:600, color:'#020e1a', background:p2.color, padding:'10px 0', borderRadius:'8px', textDecoration:'none', transition:'opacity 0.2s' }}
-                      onMouseEnter={e=>e.currentTarget.style.opacity='0.85'}
-                      onMouseLeave={e=>e.currentTarget.style.opacity='1'}>
-                      View Live Site ↗
-                    </a>}
+          {/* Full-bleed track */}
+          <div style={{ position:'relative', width:'100%' }}
+            onMouseMove={e => {
+              const el = e.currentTarget
+              const track = el.querySelector('.carousel-track')
+              const rect = el.getBoundingClientRect()
+              const x = e.clientX - rect.left
+              const w = rect.width
+              const zone = w * 0.18 // 18% edge zone
+              if (x < zone) {
+                const speed = (1 - x / zone) * 6
+                track._scrollSpeed = -speed
+              } else if (x > w - zone) {
+                const speed = ((x - (w - zone)) / zone) * 6
+                track._scrollSpeed = speed
+              } else {
+                track._scrollSpeed = 0
+              }
+            }}
+            onMouseLeave={e => {
+              const track = e.currentTarget.querySelector('.carousel-track')
+              if (track) track._scrollSpeed = 0
+            }}
+          >
+            <div className="carousel-track" ref={el => {
+              if (!el) return
+              el._scrollSpeed = 0
+              if (el._raf) return
+              const tick = () => {
+                if (el._scrollSpeed) {
+                  el.scrollLeft += el._scrollSpeed
+                }
+                el._raf = requestAnimationFrame(tick)
+              }
+              el._raf = requestAnimationFrame(tick)
+            }} style={{
+              display:'flex',
+              gap:'20px',
+              overflowX:'scroll',
+              overflowY:'visible',
+              paddingLeft:'max(32px, calc((100vw - 1100px)/2))',
+              paddingRight:'max(32px, calc((100vw - 1100px)/2))',
+              paddingBottom:'24px',
+              scrollbarWidth:'none',
+              msOverflowStyle:'none',
+              WebkitOverflowScrolling:'touch',
+            }}>
+              {projects.map((p2,i)=>(
+                <div key={p2.title} style={{
+                  width:'340px',
+                  flexShrink:0,
+                  background:'rgba(255,255,255,0.04)',
+                  border:'1px solid rgba(255,255,255,0.07)',
+                  borderTop:`3px solid ${p2.color}`,
+                  borderRadius:'16px',
+                  padding:'28px 28px 24px',
+                  display:'flex', flexDirection:'column',
+                  transition:'transform 0.25s, box-shadow 0.25s',
+                }}
+                  onMouseEnter={e=>{ e.currentTarget.style.transform='translateY(-6px)'; e.currentTarget.style.boxShadow=`0 20px 60px ${p2.color}22` }}
+                  onMouseLeave={e=>{ e.currentTarget.style.transform='translateY(0)'; e.currentTarget.style.boxShadow='none' }}>
+                  <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'20px' }}>
+                    <span style={{ fontFamily:'var(--font-mono)', fontSize:'10px', color:p2.color, letterSpacing:'0.12em' }}>{p2.type}</span>
+                    <span style={{ fontFamily:'var(--font-mono)', fontSize:'11px', color:'rgba(255,255,255,0.15)' }}>0{i+1}</span>
                   </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Dot indicators */}
-            <div style={{ display:'flex', gap:'8px', justifyContent:'center', marginTop:'32px' }}>
-              {projects.map((_,i)=>(
-                <button key={i} onClick={()=>setCarouselIdx(i)} style={{
-                  width: i===carouselIdx ? '24px' : '8px',
-                  height:'8px',
-                  borderRadius:'999px',
-                  background: i===carouselIdx ? '#67e8f9' : 'rgba(255,255,255,0.2)',
-                  border:'none', cursor:'pointer',
-                  transition:'all 0.3s',
-                  padding:0,
-                }}/>
+                  <h3 style={{ fontSize:'20px', fontWeight:700, color:'white', marginBottom:'14px', lineHeight:1.25 }}>{p2.title}</h3>
+                  <p style={{ fontSize:'13px', color:'rgba(255,255,255,0.48)', lineHeight:1.75, marginBottom:'20px', flex:1 }}>{p2.description}</p>
+                  <div style={{ display:'flex', gap:'6px', flexWrap:'wrap', marginBottom:'22px' }}>
+                    {p2.tags.map(tag=><span key={tag} style={{ fontSize:'9px', fontFamily:'var(--font-mono)', color:'rgba(255,255,255,0.35)', background:'rgba(255,255,255,0.05)', border:'1px solid rgba(255,255,255,0.07)', padding:'3px 9px', borderRadius:'999px' }}>{tag}</span>)}
+                  </div>
+                  {p2.live&&<a href={p2.live} target="_blank" rel="noopener noreferrer"
+                    style={{ display:'block', textAlign:'center', fontSize:'12px', fontWeight:600, color:'#020e1a', background:p2.color, padding:'10px 0', borderRadius:'8px', textDecoration:'none' }}
+                    onMouseEnter={e=>e.currentTarget.style.opacity='0.85'}
+                    onMouseLeave={e=>e.currentTarget.style.opacity='1'}>
+                    View Live Site ↗
+                  </a>}
+                </div>
               ))}
             </div>
+
+            {/* Left fade + hover zone indicator */}
+            <div style={{ position:'absolute', top:0, left:0, bottom:'24px', width:'120px', background:'linear-gradient(to right, rgba(2,14,26,0.8), transparent)', pointerEvents:'none', borderRadius:'0' }}/>
+            <div style={{ position:'absolute', top:0, right:0, bottom:'24px', width:'120px', background:'linear-gradient(to left, rgba(2,14,26,0.8), transparent)', pointerEvents:'none' }}/>
+          </div>
+
+          {/* Dot indicators */}
+          <div style={{ display:'flex', gap:'8px', justifyContent:'center', marginTop:'8px' }}>
+            {projects.map((_,i)=>(
+              <div key={i} style={{
+                width:'8px', height:'8px',
+                borderRadius:'50%',
+                background:'rgba(255,255,255,0.2)',
+              }}/>
+            ))}
           </div>
         </section>
 
