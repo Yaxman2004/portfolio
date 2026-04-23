@@ -8,7 +8,7 @@ const projects = [
   {
     title: "Schuberg's Bar & Grill",
     type: 'Client Concept',
-    description: 'Full redesign of a 90-year-old Big Rapids institution. Custom 5-page site with interactive menu, history timeline, and photo gallery — replacing a dated Wix site.',
+    description: 'Full redesign of a 90-year-old institution. Custom 5-page site with interactive menu, history timeline, and photo gallery — replacing a dated Wix site.',
     tags: ['Next.js', 'Tailwind CSS', 'Vercel'],
     live: 'https://schubergsbar-site.vercel.app',
     color: '#f59e0b',
@@ -16,7 +16,7 @@ const projects = [
   {
     title: "Belle's Coffeehouse",
     type: 'Client Concept',
-    description: 'Modern rustic site for a downtown Big Rapids coffee shop. Full menu, hours, about section, and contact — built to replace a Facebook-only presence.',
+    description: 'Modern rustic site for a downtown coffee shop. Full menu, hours, about section, and contact — built to replace a Facebook-only presence.',
     tags: ['HTML', 'CSS', 'JavaScript'],
     live: 'https://belles-mockup.vercel.app',
     color: '#d97706',
@@ -875,7 +875,7 @@ function Navbar({ progress }) {
   const linkOpacity = Math.max(0, 1 - progress * 8)
   return (
     <nav style={{ position:'fixed', top:0, left:0, right:0, zIndex:100, padding:'0 32px', height:'60px', display:'flex', alignItems:'center', justifyContent:'space-between', background:'transparent' }}>
-      <span style={{ fontFamily:'var(--font-mono)', fontSize:'14px', color:'#67e8f9', letterSpacing:'0.05em' }}>carter.dev</span>
+      <span style={{ fontFamily:'var(--font-mono)', fontSize:'14px', color:'#67e8f9', letterSpacing:'0.05em' }}>cartery.dev</span>
       <div style={{ display:'flex', gap:'28px', opacity: linkOpacity, pointerEvents: linkOpacity < 0.1 ? 'none' : 'auto', transition:'opacity 0.1s' }}>
         {[['#work','Work'],['#about','About'],['#contact','Contact']].map(([h,label])=>(
           <a key={h} href={h} style={{ fontSize:'13px', color:'rgba(255,255,255,0.75)', textDecoration:'none', transition:'color 0.2s' }}
@@ -956,7 +956,7 @@ export default function OceanPortfolio() {
               I build websites & web apps{' '}<span style={{ color:'#fcd34d' }}>for businesses.</span>
             </h2>
             <p style={{ fontSize:'16px', color:'rgba(255,255,255,0.82)', maxWidth:'480px', margin:'0 auto 40px', lineHeight:1.75, textShadow:'0 1px 8px rgba(0,0,0,0.4)' }}>
-              Frontend developer based in Big Rapids, MI. React, Next.js, and a passion for building things that actually work.
+              Frontend developer based in Michigan. React, Next.js, and a passion for building things that actually work.
             </p>
             <div style={{ display:'flex', gap:'16px', justifyContent:'center', flexWrap:'wrap', marginBottom:'48px' }}>
               <a href="#work" style={{ padding:'14px 32px', background:'#f59e0b', color:'#0f0a00', fontWeight:700, borderRadius:'12px', textDecoration:'none', fontSize:'14px', boxShadow:'0 0 32px rgba(245,158,11,0.35)' }}>See my work</a>
@@ -985,7 +985,45 @@ export default function OceanPortfolio() {
                 <p style={{ fontFamily:'var(--font-mono)', color:'#67e8f9', fontSize:'10px', letterSpacing:'0.22em', marginBottom:'8px' }}>02. WORK</p>
                 <h2 style={{ fontSize:'clamp(26px,5vw,42px)', fontWeight:800, color:'white', letterSpacing:'-0.02em' }}>Selected projects</h2>
               </div>
-              <p style={{ fontFamily:'var(--font-mono)', fontSize:'10px', color:'rgba(255,255,255,0.25)', letterSpacing:'0.12em' }}>HOVER EDGES TO BROWSE</p>
+            </div>
+          </div>
+
+          {/* Always-visible scroll hint arrows */}
+          <div style={{ display:'flex', justifyContent:'flex-end', gap:'10px', paddingRight:'32px', marginBottom:'16px' }}>
+            <div style={{
+              display:'flex', alignItems:'center', gap:'8px',
+              color:'rgba(255,255,255,0.35)', fontSize:'12px',
+              fontFamily:'var(--font-mono)', letterSpacing:'0.1em',
+            }}>
+              <div onClick={() => {
+                const track = document.querySelector('.carousel-track')
+                if (track) track.scrollBy({ left: -(track.offsetWidth * 0.85), behavior:'smooth' })
+              }} style={{
+                width:'36px', height:'36px', borderRadius:'50%',
+                background:'rgba(103,232,249,0.08)',
+                border:'1px solid rgba(103,232,249,0.2)',
+                display:'flex', alignItems:'center', justifyContent:'center',
+                color:'#67e8f9', fontSize:'16px', cursor:'pointer',
+                transition:'background 0.2s, border-color 0.2s',
+              }}
+                onMouseEnter={e=>{ e.currentTarget.style.background='rgba(103,232,249,0.2)'; e.currentTarget.style.borderColor='rgba(103,232,249,0.6)' }}
+                onMouseLeave={e=>{ e.currentTarget.style.background='rgba(103,232,249,0.08)'; e.currentTarget.style.borderColor='rgba(103,232,249,0.2)' }}
+              >←</div>
+              SCROLL
+              <div onClick={() => {
+                const track = document.querySelector('.carousel-track')
+                if (track) track.scrollBy({ left: track.offsetWidth * 0.85, behavior:'smooth' })
+              }} style={{
+                width:'36px', height:'36px', borderRadius:'50%',
+                background:'rgba(103,232,249,0.08)',
+                border:'1px solid rgba(103,232,249,0.2)',
+                display:'flex', alignItems:'center', justifyContent:'center',
+                color:'#67e8f9', fontSize:'16px', cursor:'pointer',
+                transition:'background 0.2s, border-color 0.2s',
+              }}
+                onMouseEnter={e=>{ e.currentTarget.style.background='rgba(103,232,249,0.2)'; e.currentTarget.style.borderColor='rgba(103,232,249,0.6)' }}
+                onMouseLeave={e=>{ e.currentTarget.style.background='rgba(103,232,249,0.08)'; e.currentTarget.style.borderColor='rgba(103,232,249,0.2)' }}
+              >→</div>
             </div>
           </div>
 
@@ -994,25 +1032,72 @@ export default function OceanPortfolio() {
             onMouseMove={e => {
               const el = e.currentTarget
               const track = el.querySelector('.carousel-track')
+              const leftArrow = el.querySelector('.carousel-arrow-left')
+              const rightArrow = el.querySelector('.carousel-arrow-right')
               const rect = el.getBoundingClientRect()
               const x = e.clientX - rect.left
               const w = rect.width
-              const zone = w * 0.18 // 18% edge zone
+              const zone = 120 // fixed 120px zone on each edge
               if (x < zone) {
-                const speed = (1 - x / zone) * 6
+                const speed = (1 - x / zone) * 8
                 track._scrollSpeed = -speed
+                if (leftArrow) leftArrow.style.opacity = '1'
+                if (rightArrow) rightArrow.style.opacity = '0'
               } else if (x > w - zone) {
-                const speed = ((x - (w - zone)) / zone) * 6
+                const speed = ((x - (w - zone)) / zone) * 8
                 track._scrollSpeed = speed
+                if (rightArrow) rightArrow.style.opacity = '1'
+                if (leftArrow) leftArrow.style.opacity = '0'
               } else {
                 track._scrollSpeed = 0
+                if (leftArrow) leftArrow.style.opacity = '0'
+                if (rightArrow) rightArrow.style.opacity = '0'
               }
             }}
             onMouseLeave={e => {
               const track = e.currentTarget.querySelector('.carousel-track')
+              const leftArrow = e.currentTarget.querySelector('.carousel-arrow-left')
+              const rightArrow = e.currentTarget.querySelector('.carousel-arrow-right')
               if (track) track._scrollSpeed = 0
+              if (leftArrow) leftArrow.style.opacity = '0'
+              if (rightArrow) rightArrow.style.opacity = '0'
             }}
           >
+            {/* Left arrow overlay */}
+            <div className="carousel-arrow-left" style={{
+              position:'absolute', left:0, top:0, bottom:'24px', width:'80px',
+              background:'linear-gradient(to right, rgba(2,14,26,0.85), transparent)',
+              display:'flex', alignItems:'center', justifyContent:'flex-start',
+              paddingLeft:'16px',
+              opacity:0, transition:'opacity 0.2s',
+              pointerEvents:'none', zIndex:10,
+            }}>
+              <div style={{
+                width:'40px', height:'40px', borderRadius:'50%',
+                background:'rgba(103,232,249,0.15)',
+                border:'1px solid rgba(103,232,249,0.4)',
+                display:'flex', alignItems:'center', justifyContent:'center',
+                color:'#67e8f9', fontSize:'18px',
+              }}>←</div>
+            </div>
+
+            {/* Right arrow overlay */}
+            <div className="carousel-arrow-right" style={{
+              position:'absolute', right:0, top:0, bottom:'24px', width:'80px',
+              background:'linear-gradient(to left, rgba(2,14,26,0.85), transparent)',
+              display:'flex', alignItems:'center', justifyContent:'flex-end',
+              paddingRight:'16px',
+              opacity:0, transition:'opacity 0.2s',
+              pointerEvents:'none', zIndex:10,
+            }}>
+              <div style={{
+                width:'40px', height:'40px', borderRadius:'50%',
+                background:'rgba(103,232,249,0.15)',
+                border:'1px solid rgba(103,232,249,0.4)',
+                display:'flex', alignItems:'center', justifyContent:'center',
+                color:'#67e8f9', fontSize:'18px',
+              }}>→</div>
+            </div>
             <div className="carousel-track" ref={el => {
               if (!el) return
               el._scrollSpeed = 0
@@ -1024,21 +1109,23 @@ export default function OceanPortfolio() {
                 el._raf = requestAnimationFrame(tick)
               }
               el._raf = requestAnimationFrame(tick)
+              // no dot tracking needed
+              el.addEventListener('scroll', () => {})
             }} style={{
               display:'flex',
               gap:'20px',
               overflowX:'scroll',
               overflowY:'visible',
-              paddingLeft:'max(32px, calc((100vw - 1100px)/2))',
-              paddingRight:'max(32px, calc((100vw - 1100px)/2))',
+              paddingLeft:'32px',
+              paddingRight:'32px',
               paddingBottom:'24px',
               scrollbarWidth:'none',
               msOverflowStyle:'none',
               WebkitOverflowScrolling:'touch',
             }}>
               {projects.map((p2,i)=>(
-                <div key={p2.title} style={{
-                  width:'340px',
+                <div key={p2.title} className="project-card" style={{
+                  width:'calc((100vw - 64px - 40px) / 3)',
                   flexShrink:0,
                   background:'rgba(255,255,255,0.04)',
                   border:'1px solid rgba(255,255,255,0.07)',
@@ -1069,21 +1156,9 @@ export default function OceanPortfolio() {
               ))}
             </div>
 
-            {/* Left fade + hover zone indicator */}
-            <div style={{ position:'absolute', top:0, left:0, bottom:'24px', width:'120px', background:'linear-gradient(to right, rgba(2,14,26,0.8), transparent)', pointerEvents:'none', borderRadius:'0' }}/>
-            <div style={{ position:'absolute', top:0, right:0, bottom:'24px', width:'120px', background:'linear-gradient(to left, rgba(2,14,26,0.8), transparent)', pointerEvents:'none' }}/>
+
           </div>
 
-          {/* Dot indicators */}
-          <div style={{ display:'flex', gap:'8px', justifyContent:'center', marginTop:'8px' }}>
-            {projects.map((_,i)=>(
-              <div key={i} style={{
-                width:'8px', height:'8px',
-                borderRadius:'50%',
-                background:'rgba(255,255,255,0.2)',
-              }}/>
-            ))}
-          </div>
         </section>
 
         {/* ABOUT */}
@@ -1096,7 +1171,7 @@ export default function OceanPortfolio() {
             <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))', gap:'28px' }}>
               <div style={glass}>
                 <div style={{ display:'flex', flexDirection:'column', gap:'14px', fontSize:'15px', color:'rgba(255,255,255,0.6)', lineHeight:1.8 }}>
-                  <p>I'm Carter — a self-taught frontend developer based in Big Rapids, Michigan. I build fast, polished websites and web apps that help businesses look professional and work reliably.</p>
+                  <p>I'm Carter — a self-taught frontend developer based in Michigan. I build fast, polished websites and web apps that help businesses look professional and work reliably.</p>
                   <p>I started building on the web because I wanted to create real things that real people use. Whether it's a local restaurant needing a better site or a startup needing an MVP — I care about the craft and the end result.</p>
                   <p>Currently open to freelance projects and looking to take on new clients.</p>
                 </div>
@@ -1122,7 +1197,7 @@ export default function OceanPortfolio() {
             </div>
             <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(260px,1fr))', gap:'28px' }}>
               <div style={{ display:'flex', flexDirection:'column', gap:'22px' }}>
-                {[{label:'EMAIL',value:'carteryax@gmail.com',href:'mailto:carteryax@gmail.com'},{label:'BASED IN',value:'Big Rapids, Michigan',href:null}].map(item=>(
+                {[{label:'EMAIL',value:'carteryax@gmail.com',href:'mailto:carteryax@gmail.com'},{label:'BASED IN',value:'Michigan',href:null}].map(item=>(
                   <div key={item.label}>
                     <p style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(255,255,255,0.28)', letterSpacing:'0.22em', marginBottom:'6px' }}>{item.label}</p>
                     {item.href?<a href={item.href} style={{ color:'white', textDecoration:'none', fontSize:'15px' }} onMouseEnter={e=>e.target.style.color='#67e8f9'} onMouseLeave={e=>e.target.style.color='white'}>{item.value}</a>:<p style={{ color:'white', fontSize:'15px' }}>{item.value}</p>}
