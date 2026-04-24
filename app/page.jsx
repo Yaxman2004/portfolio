@@ -953,10 +953,10 @@ export default function OceanPortfolio() {
             <p style={{ fontFamily:'var(--font-mono)', color:'#fcd34d', fontSize:'13px', marginBottom:'12px', letterSpacing:'0.12em' }}>Hi, I'm</p>
             <h1 style={{ fontSize:'clamp(52px,10vw,96px)', fontWeight:800, color:'#ffffff', lineHeight:1.05, marginBottom:'16px', letterSpacing:'-0.02em', textShadow:'0 2px 20px rgba(0,0,0,0.5)' }}>Carter Yax</h1>
             <h2 style={{ fontSize:'clamp(18px,3vw,28px)', fontWeight:500, color:'rgba(255,255,255,0.92)', marginBottom:'20px', lineHeight:1.4, textShadow:'0 1px 10px rgba(0,0,0,0.4)' }}>
-              I build websites & web apps{' '}<span style={{ color:'#fcd34d' }}>for Michigan businesses.</span>
+              I build websites & web apps{' '}<span style={{ color:'#fcd34d' }}>for businesses.</span>
             </h2>
             <p style={{ fontSize:'16px', color:'rgba(255,255,255,0.82)', maxWidth:'480px', margin:'0 auto 40px', lineHeight:1.75, textShadow:'0 1px 8px rgba(0,0,0,0.4)' }}>
-              Freelance web developer helping small businesses across Michigan get online — restaurants, contractors, shops, and everything in between.
+              Freelance web developer helping businesses across the US get online — restaurants, contractors, shops, and everything in between.
             </p>
             <div style={{ display:'flex', gap:'16px', justifyContent:'center', flexWrap:'wrap', marginBottom:'48px' }}>
               <a href="#work" style={{ padding:'14px 32px', background:'#f59e0b', color:'#0f0a00', fontWeight:700, borderRadius:'12px', textDecoration:'none', fontSize:'14px', boxShadow:'0 0 32px rgba(245,158,11,0.35)' }}>See my work</a>
@@ -1163,7 +1163,7 @@ export default function OceanPortfolio() {
               <div style={glass}>
                 <div style={{ display:'flex', flexDirection:'column', gap:'14px', fontSize:'15px', color:'rgba(255,255,255,0.6)', lineHeight:1.8 }}>
                   <p>I'm Carter — a self-taught frontend developer and Michigan-based freelance web designer. I build fast, polished websites and web apps that help businesses look professional and get found online.</p>
-                  <p>I work remotely with small businesses all across Michigan — restaurants, contractors, coffee shops, boutiques, and anyone who needs a real website instead of a Facebook page. From the UP to Detroit, if you're in Michigan I can build your site.</p>
+                  <p>I work remotely with small businesses all across the US — restaurants, contractors, coffee shops, boutiques, and anyone who needs a real website instead of a Facebook page. I am based in Michigan.</p>
                   <p>Currently open to freelance projects and always happy to hear from new people.</p>
                 </div>
                 <a href="mailto:carteryax@gmail.com" style={{ display:'inline-block', marginTop:'22px', fontSize:'14px', color:'#67e8f9', textDecoration:'none', fontWeight:500 }}>carteryax@gmail.com →</a>
