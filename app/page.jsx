@@ -30,14 +30,6 @@ const projects = [
     color: '#d4621a',
   },
   {
-    title: 'Metrik',
-    type: 'SaaS Landing Page',
-    description: 'Analytics SaaS landing page with a fully coded dashboard mockup, animated hero, feature grid, and working monthly/yearly pricing toggle.',
-    tags: ['React', 'Next.js', 'Tailwind CSS'],
-    live: 'https://metrik-chi.vercel.app',
-    color: '#a78bfa',
-  },
-  {
     title: 'Bloxscope',
     type: 'Full-Stack Product',
     description: 'Real-time SaaS analytics for Roblox developers. Live dashboards, AI-powered moderation, revenue tracking, player activity, and server health monitoring.',
