@@ -48,7 +48,7 @@ const projects = [
   {
     title: 'Vaultmate',
     type: 'Full Frontend Product',
-    description: 'Steam compatibility tool to help players compare with friends and find new games to play together.',
+    description: 'Steam compatibility tool to help players compare their games with friends. Find new games to play by yourself or with friends based off of previous games you have played.',
     tags: ['Next.js', 'Python', 'Vercel'],
     live: 'https://www.getvaultmate.com',
     color: '#3a65f0',
