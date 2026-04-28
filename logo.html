@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<style>
+  body { margin: 0; background: #020e1a; display: flex; align-items: center; justify-content: center; width: 500px; height: 500px; }
+</style>
+</head>
+<body>
+<svg width="500" height="500" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="500" height="500" fill="#020e1a"/>
+  <!-- Subtle grid dots -->
+  <pattern id="dots" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
+    <circle cx="1" cy="1" r="1" fill="rgba(103,232,249,0.08)"/>
+  </pattern>
+  <rect width="500" height="500" fill="url(#dots)"/>
+  <!-- Outer ring -->
+  <circle cx="250" cy="250" r="200" fill="none" stroke="rgba(103,232,249,0.12)" stroke-width="1"/>
+  <circle cx="250" cy="250" r="170" fill="none" stroke="rgba(103,232,249,0.06)" stroke-width="1"/>
+  <!-- CY monogram -->
+  <text x="250" y="210" font-family="Georgia, serif" font-size="140" font-weight="700" fill="white" text-anchor="middle" dominant-baseline="middle" letter-spacing="-8">CY</text>
+  <!-- Accent line -->
+  <rect x="150" y="278" width="200" height="2" fill="#67e8f9" rx="1"/>
+  <!-- cartery.dev text -->
+  <text x="250" y="320" font-family="monospace" font-size="22" fill="#67e8f9" text-anchor="middle" letter-spacing="4" opacity="0.8">cartery.dev</text>
+</svg>
+</body>
+</html>

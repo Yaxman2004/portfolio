@@ -45,6 +45,14 @@ const projects = [
     live: 'https://www.bloxscope.com',
     color: '#38bdf8',
   },
+  {
+    title: 'Vaultmate',
+    type: 'Full Frontend Product',
+    description: 'Steam compatibility tool to help players compare with friends and find new games to play together.',
+    tags: ['Next.js', 'Python', 'Vercel'],
+    live: 'https://www.getvaultmate.com',
+    color: '#3a65f0',
+  },
 ]
 
 const skills = ['React','Next.js','JavaScript','Tailwind CSS','Python','Node.js','Vercel','Git / GitHub','REST APIs','Figma','Responsive Design','SEO']
