@@ -51,9 +51,9 @@ export default function Contact() {
               <div className="flex flex-col gap-6 mb-10">
                 <div>
                   <p className="text-xs font-mono text-slate-500 tracking-widest uppercase mb-2">Email</p>
-                  <a href="mailto:carteryax@gmail.com"
+                  <a href="mailto:cjdigitalcontact@gmail.com"
                      className="text-white hover:text-[#38BDF8] transition-colors">
-                    carteryax@gmail.com
+                    cjdigitalcontact@gmail.com
                   </a>
                 </div>
                 <div>
@@ -116,7 +116,7 @@ export default function Contact() {
       <footer className="border-t border-white/5 px-6 py-8">
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="font-mono text-xs text-slate-600">
-            © {new Date().getFullYear()} Carter Yax. Built with Next.js & Tailwind.
+            © {new Date().getFullYear()} CJ Digital. Built with Next.js & Tailwind.
           </p>
           <div className="flex items-center gap-6">
             {socials.map((s) => (
